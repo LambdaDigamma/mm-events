@@ -12,6 +12,8 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
+        $this->setUpDatabase();
+
         Factory::guessFactoryNamesUsing(
             fn (string $modelName) => 'LambdaDigamma\\MMEvents\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
@@ -32,10 +34,11 @@ class TestCase extends Orchestra
             'database' => ':memory:',
             'prefix' => '',
         ]);
+    }
 
-        /*
+    protected function setUpDatabase()
+    {
         include_once __DIR__.'/../database/migrations/create_mm_events_table.php.stub';
-        (new \CreatePackageTable())->up();
-        */
+        (new \CreateMMEventsTable())->up();
     }
 }
