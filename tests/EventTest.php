@@ -32,7 +32,6 @@ class EventTest extends TestCase
         $this->assertTrue($activeEventsDatabase->contains($activeEventStartEnd->id));
         $this->assertTrue($activeEventsDatabase->contains($activeEventInDeadline->id));
         $this->assertFalse($activeEventsDatabase->contains($upcomingStartEvent->id));
-
     }
 
     public function testScopePublished()
@@ -77,7 +76,7 @@ class EventTest extends TestCase
         $this->assertFalse($scopedEventsDatabase->contains($eventTomorrow->id));
     }
 
-    public function testScopeUpcomingToday() 
+    public function testScopeUpcomingToday()
     {
         $eventPreviousDay = Event::factory()
             ->create([
@@ -185,13 +184,12 @@ class EventTest extends TestCase
     {
         $event = Event::factory()
             ->create([
-                'start_date' => null, 
-                'end_date' => null
+                'start_date' => null,
+                'end_date' => null,
             ]);
 
         $this->expectException(InvalidLink::class);
 
         $this->assertStringStartsWith('data:text/calendar;charset=utf8;base64,', $event->ics());
     }
-
 }

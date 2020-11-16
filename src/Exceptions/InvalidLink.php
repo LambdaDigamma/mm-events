@@ -18,5 +18,4 @@ class InvalidLink extends InvalidArgumentException
     {
         return new self("No start date is provided.");
     }
-
 }

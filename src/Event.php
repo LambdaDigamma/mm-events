@@ -20,13 +20,13 @@ class Event extends Model
 
     protected $fillable = [
         'name', 'start_date', 'end_date',
-        'description', 'url', 'image_path', 
-        'category', 'organisation_id', 'entry_id', 
-        'extras', 'is_published', 'scheduled_at'
+        'description', 'url', 'image_path',
+        'category', 'organisation_id', 'entry_id',
+        'extras', 'is_published', 'scheduled_at',
     ];
 
     protected $casts = [
-        'extras' => 'array'
+        'extras' => 'array',
     ];
 
     public $translatable = ['name', 'description', 'category'];
@@ -47,7 +47,7 @@ class Event extends Model
     /**
      * Returns a data string ics format of the event.
      * This can be used to download an ics file.
-     * 
+     *
      * @return string
      */
     public function ics()
@@ -57,7 +57,7 @@ class Event extends Model
 
         if ($start_date == null) {
             throw InvalidLink::noStartDateProvided();
-        } else if ($end_date == null) {
+        } elseif ($end_date == null) {
             $end_date = Carbon::now()->addMinutes(config('mm-events.event_default_duration'));
         }
 
@@ -98,6 +98,7 @@ class Event extends Model
     {
         $now = Carbon::now()->toDateTimeString();
         $today = Carbon::today()->toDateString();
+
         return $query
             ->whereDate('start_date', '=', $today)
             ->orWhereDate('end_date', '=', $today)
@@ -109,9 +110,9 @@ class Event extends Model
     }
 
     /**
-     * Returns all upcoming events that have a start date 
+     * Returns all upcoming events that have a start date
      * which is greater than the current date.
-     * 
+     *
      * @return Builder
      */
     public function scopeUpcomingToday(Builder $query)
@@ -124,12 +125,13 @@ class Event extends Model
     /**
      * Returns all events that take place in the future
      * after tomorrow or have no start date set.
-     * 
+     *
      * @return Builder
      */
     public function scopeNextDays(Builder $query)
     {
         $today = Carbon::today()->toDateString();
+
         return $query
             ->whereDate('start_date', '>', $today)
             ->orWhere('start_date', '=', null);
@@ -138,7 +140,7 @@ class Event extends Model
     /**
      * Orders the query with a chronological start date.
      * Events without a start date go last.
-     * 
+     *
      * @return Builder
      */
     public function scopeChronological(Builder $query)
@@ -149,7 +151,7 @@ class Event extends Model
 
     /**
      * Returns all events that have a start date greater than today.
-     * 
+     *
      * @return Builder
      */
     public function scopeFuture(Builder $query)
@@ -171,5 +173,4 @@ class Event extends Model
             }
         });
     }
-
 }
