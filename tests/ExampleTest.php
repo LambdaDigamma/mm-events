@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\Skeleton\Tests;
+namespace LambdaDigamma\MMEvents\Tests;
 
 class ExampleTest extends TestCase
 {

@@ -1,19 +1,18 @@
 <?php
 
-namespace Spatie\Skeleton\Database\Factories;
+namespace LambdaDigamma\MMEvents\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use LambdaDigamma\MMEvents\Event;
 
-/*
 class ModelFactory extends Factory
 {
-    protected $model = YourModel::class;
+    protected $model = Event::class;
 
     public function definition()
     {
         return [
-
+            
         ];
     }
 }
-*/

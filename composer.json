@@ -1,38 +1,45 @@
 {
-    "name": ":vendor_name/:package_name",
-    "description": ":package_description",
+    "name": "lambdadigamma/mm-events",
+    "description": "A package providing events for the Mein Moers platform.",
     "keywords": [
-        ":vendor_name",
-        ":package_name"
+        "lambdadigamma",
+        "events",
+        "city",
+        "local",
+        "calendar",
+        "occasions",
+        "mein-moers"
     ],
-    "homepage": "https://github.com/:vendor_name/:package_name",
+    "homepage": "https://github.com/lambdadigamma/mm-events",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": ":author_email",
-            "homepage": "https://spatie.be",
+            "name": "Lennart Fischer",
+            "email": "github@lambdadigamma.com",
+            "homepage": "https://lambdadigamma.com",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^7.4|^8.0",
-        "illuminate/contracts": "^8.0"
+        "illuminate/contracts": "^8.0",
+        "spatie/laravel-translatable": "^4.5"
     },
     "require-dev": {
         "orchestra/testbench": "^6.0",
         "phpunit/phpunit": "^9.3",
-        "vimeo/psalm": "^3.11"
+        "vimeo/psalm": "^3.11",
+        "fakerphp/faker": "^1.10"
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\Skeleton\\": "src",
-            "Spatie\\Skeleton\\Database\\Factories\\": "database/factories"
+            "LambdaDigamma\\MMEvents\\": "src",
+            "LambdaDigamma\\MMEvents\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\Skeleton\\Tests\\": "tests"
+            "LambdaDigamma\\MMEvents\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -46,23 +53,13 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Spatie\\Skeleton\\SkeletonServiceProvider"
+                "LambdaDigamma\\MMEvents\\MMEventsServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "Spatie\\Skeleton\\SkeletonFacade"
+                "MMEvents": "LambdaDigamma\\MMEvents\\MMEventsFacade"
             }
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "funding": [
-        {
-            "type": "github",
-            "url": "https://github.com/sponsors/spatie"
-        },
-        {
-            "type": "other",
-            "url": "https://spatie.be/open-source/support-us"
-        }
-    ]
+    "prefer-stable": true
 }

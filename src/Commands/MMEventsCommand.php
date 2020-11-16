@@ -1,12 +1,12 @@
 <?php
 
-namespace Spatie\Skeleton\Commands;
+namespace LambdaDigamma\MMEvents\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class MMEventsCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'mm-events';
 
     public $description = 'My command';
 
