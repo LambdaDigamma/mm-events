@@ -129,7 +129,7 @@ class Event extends Model
      */
     public function scopeNextDays(Builder $query)
     {
-        $today = Carbon::now()->toDateString();
+        $today = Carbon::today()->toDateString();
         return $query
             ->whereDate('start_date', '>', $today)
             ->orWhere('start_date', '=', null);

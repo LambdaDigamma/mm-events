@@ -106,6 +106,72 @@ class EventTest extends TestCase
         $this->assertFalse($scopedEventsDatabase->contains($eventTomorrow->id));
     }
 
+    public function testScopeNextDays()
+    {
+        $eventPreviousDay = Event::factory()
+            ->create([
+                'start_date' => Carbon::now()->addDays(-1),
+            ]);
+
+        $eventAlreadyActive = Event::factory()
+            ->create([
+                'start_date' => Carbon::now()->addMinutes(-60),
+            ]);
+
+        $eventUpcomingToday = Event::factory()
+            ->upcomingToday()
+            ->create();
+
+        $eventTomorrow = Event::factory()
+            ->create([
+                'start_date' => Carbon::now()->addDay(),
+            ]);
+
+        $scopedEventsDatabase = Event::nextDays()->pluck('id');
+        
+        $this->assertFalse($scopedEventsDatabase->contains($eventPreviousDay->id));
+        $this->assertFalse($scopedEventsDatabase->contains($eventAlreadyActive->id));
+        $this->assertFalse($scopedEventsDatabase->contains($eventUpcomingToday->id));
+        $this->assertTrue($scopedEventsDatabase->contains($eventTomorrow->id));
+    }
+
+    public function scopeSortChoronologically()
+    {
+        $eventUpcomingToday = Event::factory()
+            ->upcomingToday()
+            ->create();
+
+        $eventTomorrow = Event::factory()
+            ->create([
+                'start_date' => Carbon::now()->addDay(),
+            ]);
+
+        $eventPreviousDay = Event::factory()
+            ->create([
+                'start_date' => Carbon::now()->addDays(-1),
+            ]);
+
+        $eventAlreadyActive = Event::factory()
+            ->create([
+                'start_date' => Carbon::now()->addMinutes(-60),
+            ]);
+
+        $eventNoDate = Event::factory()
+            ->create([
+                'start_date' => null,
+            ]);
+
+        $scopedEventsDatabase = Event::query()->chronological()->get()->pluck('id');
+
+        $this->assertEquals($scopedEventsDatabase->toArray(), collect([
+            $eventPreviousDay->id,
+            $eventAlreadyActive->id,
+            $eventUpcomingToday->id,
+            $eventTomorrow->id,
+            $eventNoDate->id,
+        ])->toArray());
+    }
+
     public function testIcsExportActiveStart()
     {
         $event = Event::factory()
