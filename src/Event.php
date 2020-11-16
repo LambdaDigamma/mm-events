@@ -10,7 +10,4 @@ class Event extends Model
     use SoftDeletes;
 
     protected $table = "mm_events";
-
-    
-
 }
