@@ -4,7 +4,6 @@ namespace LambdaDigamma\MMEvents\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use LambdaDigamma\MMEvents\Exceptions\InvalidLink;
