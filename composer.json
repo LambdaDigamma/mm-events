@@ -34,7 +34,7 @@
     "autoload": {
         "psr-4": {
             "LambdaDigamma\\MMEvents\\": "src",
-            "LambdaDigamma\\MMEvents\\Database\\Factories\\": "database/factories"
+            "LambdaDigamma\\MMEvents\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {

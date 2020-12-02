@@ -1,6 +1,6 @@
 <?php
 
-namespace LambdaDigamma\MMEvents;
+namespace LambdaDigamma\MMEvents\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -8,12 +8,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use LambdaDigamma\MMEvents\Exceptions\InvalidLink;
+use LambdaDigamma\MMEvents\Link;
+use LambdaDigamma\MMEvents\Traits\HasPackageFactory;
 use Spatie\Translatable\HasTranslations;
 
 class Event extends Model
 {
     use SoftDeletes;
-    use HasFactory;
+    use HasPackageFactory;
     use HasTranslations;
 
     protected $table = "mm_events";

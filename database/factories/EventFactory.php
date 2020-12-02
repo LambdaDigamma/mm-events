@@ -4,7 +4,7 @@ namespace LambdaDigamma\MMEvents\Database\Factories;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use LambdaDigamma\MMEvents\Event;
+use LambdaDigamma\MMEvents\Models\Event;
 
 class EventFactory extends Factory
 {

@@ -5,7 +5,7 @@ namespace LambdaDigamma\MMEvents\Tests;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use LambdaDigamma\MMEvents\Event;
+use LambdaDigamma\MMEvents\Models\Event;
 use LambdaDigamma\MMEvents\Exceptions\InvalidLink;
 
 class EventTest extends TestCase
