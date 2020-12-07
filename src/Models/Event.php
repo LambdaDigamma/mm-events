@@ -9,11 +9,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use LambdaDigamma\MMEvents\Exceptions\InvalidLink;
 use LambdaDigamma\MMEvents\Link;
 use LambdaDigamma\MMEvents\Traits\HasPackageFactory;
+use LaravelArchivable\Archivable;
 use Spatie\Translatable\HasTranslations;
 
 class Event extends Model
 {
     use SoftDeletes;
+    use Archivable;
     use HasPackageFactory;
     use HasTranslations;
 

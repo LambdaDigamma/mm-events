@@ -25,12 +25,13 @@ class CreateMMEventsTable extends Migration
             $table->json('category', 1000)->nullable();
             $table->integer('organisation_id')->unsigned()->nullable();
             $table->integer('entry_id')->unsigned()->nullable();
-            $table->boolean('is_published')->default(1);
-            $table->timestamp('scheduled_at')->nullable();
             $table->uuid('platform_id')->nullable()->unique();
             $table->json('extras')->nullable();
-            $table->softDeletes();
+            $table->timestamp('published_at')->nullable();
+            $table->timestamp('scheduled_at')->nullable();
             $table->timestamps();
+            $table->archivedAt();
+            $table->softDeletes();
         });
     }
 
