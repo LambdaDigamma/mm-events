@@ -25,7 +25,7 @@ class Event extends Model
         'name', 'start_date', 'end_date',
         'description', 'url', 'image_path',
         'category', 'organisation_id', 'entry_id',
-        'extras', 'is_published', 'scheduled_at',
+        'extras', 'published_at', 'scheduled_at',
     ];
 
     protected $casts = [

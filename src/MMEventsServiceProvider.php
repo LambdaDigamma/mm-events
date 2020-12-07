@@ -35,6 +35,11 @@ class MMEventsServiceProvider extends ServiceProvider
 
     public function register()
     {
+        /*
+        * Register the service provider for the dependency.
+        */
+        $this->app->register('LaravelArchivable\LaravelArchivableServiceProvider');
+
         $this->mergeConfigFrom(__DIR__ . '/../config/mm-events.php', 'mm-events');
     }
 

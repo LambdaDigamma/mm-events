@@ -17,7 +17,7 @@ class EventFactory extends Factory
             'description' => $this->faker->realText(200),
             'url' => $this->faker->url,
             'image_path' => $this->faker->imageUrl(640, 480),
-            'is_published' => $this->faker->boolean(85),
+            'published_at' => $this->faker->boolean(85) ? $this->faker->dateTimeBetween('-60 days', '-1 days') : null,
             'extras' => collect(['locationName' => $this->faker->word()]),
         ];
     }
@@ -67,7 +67,7 @@ class EventFactory extends Factory
     public function published() 
     {
         return $this->state(fn () => [
-            'is_published' => true,
+            'published_at' => $this->faker->dateTimeBetween('-60 days', '-1 days'),
             'scheduled_at' => null,
         ]);
     }
@@ -75,7 +75,7 @@ class EventFactory extends Factory
     public function notPublished()
     {
         return $this->state(fn () => [
-            'is_published' => false,
+            'published_at' => null,
             'scheduled_at' => $this->faker->dateTimeInInterval('tomorrow', '+ 10 days')
         ]);
     }
