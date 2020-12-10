@@ -192,4 +192,28 @@ class EventTest extends TestCase
 
         $this->assertStringStartsWith('data:text/calendar;charset=utf8;base64,', $event->ics());
     }
+
+    public function testPublish()
+    {
+        $event = Event::factory()
+            ->upcomingToday()
+            ->notPublished()
+            ->create();
+
+        $this->assertNull($event->published_at);
+        $event->publish();
+        $this->assertNotNull($event->published_at);
+    }
+
+    public function testUnpublish()
+    {
+        $event = Event::factory()
+            ->upcomingToday()
+            ->published()
+            ->create();
+
+        $this->assertNotNull($event->published_at);
+        $event->unpublish();
+        $this->assertNull($event->published_at);
+    }
 }
