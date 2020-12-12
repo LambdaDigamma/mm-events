@@ -24,7 +24,7 @@ class Event extends Model
     protected $fillable = [
         'name', 'start_date', 'end_date',
         'description', 'url', 'image_path',
-        'category', 'organisation_id', 'entry_id',
+        'category', 'organisation_id', 'place_id',
         'extras', 'published_at', 'scheduled_at',
     ];
 
@@ -34,7 +34,7 @@ class Event extends Model
 
     public $translatable = ['name', 'description', 'category'];
 
-    public $dates = ['start_date', 'end_date', 'scheduled_at'];
+    public $dates = ['start_date', 'end_date', 'scheduled_at', 'published_at'];
 
     public function toArray()
     {
