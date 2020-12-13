@@ -54,22 +54,24 @@ class Event extends Model
     }
 
     /**
-     * Marks the event as published by setting 
+     * Marks the event as published by setting
      * `published_at` to current timestamp.
      */
     public function publish()
     {
         $this->published_at = Carbon::now();
+
         return $this->save();
     }
 
     /**
-     * Marks the event as not publsihed by resetting 
+     * Marks the event as not publsihed by resetting
      * `published_at` to null.
      */
     public function unpublish()
     {
         $this->published_at = null;
+
         return $this->save();
     }
 
