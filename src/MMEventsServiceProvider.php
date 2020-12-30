@@ -2,13 +2,19 @@
 
 namespace LambdaDigamma\MMEvents;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use LambdaDigamma\MMEvents\Commands\MMEventsCommand;
+use LambdaDigamma\MMEvents\Models\Event;
 
 class MMEventsServiceProvider extends ServiceProvider
 {
     public function boot()
     {
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'mm-events');
+
+        $this->registerRoutes();
+
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../config/mm-events.php' => config_path('mm-events.php'),
@@ -29,8 +35,6 @@ class MMEventsServiceProvider extends ServiceProvider
                 MMEventsCommand::class,
             ]);
         }
-
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'mm-events');
     }
 
     public function register()
@@ -53,5 +57,36 @@ class MMEventsServiceProvider extends ServiceProvider
         }
 
         return false;
+    }
+
+    protected function registerRoutes()
+    {
+        Route::bind('anyevent', function ($id) {
+            return Event::query()
+                ->withTrashed()
+                ->withArchived()
+                ->findOrFail($id);
+        });
+
+
+        // Route::group($this->routeConfiguration(), function () {
+        //     $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
+        // });
+        
+        Route::group([
+            'prefix' => config('mm-events.admin_prefix', 'admin'),
+            'as' => config('mm-events.admin_as', 'admin.'),
+            'middleware' => config('mm-events.admin_middleware', ['web', 'auth'])
+        ], function () {
+            $this->loadRoutesFrom(__DIR__ . '/../routes/admin.php');
+        });
+    }
+
+    protected function routeConfiguration()
+    {
+        return [
+            'prefix' => config('mm-events.api_prefix'),
+            'middleware' => config('mm-events.api_middleware'),
+        ];
     }
 }

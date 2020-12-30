@@ -15,5 +15,38 @@ return [
      * This value is measured in minutes.
      */
     'event_active_duration' => 30,
+
+    /*
+     * This table names are used to connect with other packages.
+     */
+    'places_table' => 'mm_places',
+
+    /**
+     * The admin endpoints are being registered under this prefix.
+     */
+    'admin_prefix' => 'admin',
+
+    /**
+     * This middleware stack is being 
+     * used for all admin routes.
+     */
+    'admin_middleware' => ['web', 'auth'],
+
+    /**
+     * 
+     */
+    'admin_as' => 'admin.',
+
+    /**
+     * The api endpoints are being registered 
+     * under this prefix.
+     */
+    'api_prefix' => 'api',
+
+    /**
+     * This middleware stack is being 
+     * used for all api routes.
+     */
+    'api_middleware' => ['api'],
     
 ];

@@ -98,13 +98,6 @@ class Event extends Model
         return $link->ics();
     }
 
-    public function scopePublished($query)
-    {
-        return $query
-            ->where('scheduled_at', '<=', Carbon::now()->toDateTimeString())
-            ->orWhere('scheduled_at', '=', null);
-    }
-
     public function scopeActive($query)
     {
         $now = Carbon::now()->toDateTimeString();
@@ -192,10 +185,39 @@ class Event extends Model
             ->orWhere('start_date', '=', null);
     }
 
+    public function scopePast(Builder $query)
+    {
+        return $query
+            ->where('start_date', '<=', now()->toDateString());
+    }
+
+    public function scopeDrafts(Builder $query) 
+    {
+        return $query->where('published_at', '=', null);
+    }
+
+    public function scopePublished($query)
+    {
+        return $query
+            ->where('published_at', '<=', Carbon::now()->toDateTimeString());
+    }
+
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where('name', 'like', '%'.$search.'%');
+        })->when($filters['type'] ?? null, function ($query, $type) {
+            if ($type === 'upcoming') {
+                $query->future();
+            } elseif ($type === 'past') {
+                $query->past();
+            } elseif ($type === 'drafts') {
+                $query->drafts();
+            } elseif ($type === 'archived') {
+                $query->onlyArchived();
+            } elseif ($type === 'deleted') {
+                $query->onlyTrashed();
+            }
         })->when($filters['trashed'] ?? null, function ($query, $trashed) {
             if ($trashed === 'with') {
                 $query->withTrashed();
