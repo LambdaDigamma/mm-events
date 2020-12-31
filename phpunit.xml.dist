@@ -10,8 +10,11 @@
          stopOnFailure="false"
          verbose="true"
 >
+    <php>
+        <env name="APP_KEY" value="AckfSECXIvnK5r28GVIWUAxmbBSjTsmF"/>
+    </php>
     <testsuites>
-        <testsuite name="LambdaDigamma Test Suite">
+        <testsuite name="MMEvents Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

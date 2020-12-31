@@ -38,6 +38,7 @@ class TestCase extends Orchestra
 
     protected function setUpDatabase()
     {
+        $this->loadLaravelMigrations();
         include_once __DIR__.'/../database/migrations/create_mm_events_table.php.stub';
         (new \CreateMMEventsTable())->up();
     }

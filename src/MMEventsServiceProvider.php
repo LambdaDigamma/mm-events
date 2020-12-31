@@ -11,10 +11,6 @@ class MMEventsServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'mm-events');
-
-        $this->registerRoutes();
-
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../config/mm-events.php' => config_path('mm-events.php'),
@@ -35,6 +31,9 @@ class MMEventsServiceProvider extends ServiceProvider
                 MMEventsCommand::class,
             ]);
         }
+
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'mm-events');
+        $this->registerRoutes();
     }
 
     public function register()
