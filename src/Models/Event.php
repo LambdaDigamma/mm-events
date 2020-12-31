@@ -191,7 +191,7 @@ class Event extends Model
             ->where('start_date', '<=', now()->toDateString());
     }
 
-    public function scopeDrafts(Builder $query) 
+    public function scopeDrafts(Builder $query)
     {
         return $query->where('published_at', '=', null);
     }

@@ -3,9 +3,8 @@
 namespace LambdaDigamma\MMEvents\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
-use LambdaDigamma\MMEvents\Models\Event;
-use LambdaDigamma\MMEvents\Http\Controllers\Controller;
 use LambdaDigamma\MMEvents\Http\Requests\UpdateGeneralEvent;
+use LambdaDigamma\MMEvents\Models\Event;
 
 class EventController extends Controller
 {
@@ -22,5 +21,4 @@ class EventController extends Controller
                 ? new JsonResponse('', 200)
                 : back()->with('success', 'Die Daten wurden gespeichert.');
     }
-
 }

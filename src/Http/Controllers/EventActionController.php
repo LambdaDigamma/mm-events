@@ -2,10 +2,9 @@
 
 namespace LambdaDigamma\MMEvents\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use LambdaDigamma\MMEvents\Models\Event;
-use LambdaDigamma\MMEvents\Http\Controllers\Controller;
 
 class EventActionController extends Controller
 {
@@ -44,5 +43,4 @@ class EventActionController extends Controller
                 ? new JsonResponse('', 200)
                 : redirect()->back()->with('info', 'Die Veranstaltung wurde ins Entwurfsstadium zurück versetzt.');
     }
-
 }

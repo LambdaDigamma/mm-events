@@ -12,7 +12,7 @@ class UpdateEventTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    function authenticated_users_can_update_an_event()
+    public function authenticated_users_can_update_an_event()
     {
         $this->assertCount(0, Event::all());
 

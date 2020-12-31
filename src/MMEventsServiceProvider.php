@@ -75,7 +75,7 @@ class MMEventsServiceProvider extends ServiceProvider
         Route::group([
             'prefix' => config('mm-events.admin_prefix', 'admin'),
             'as' => config('mm-events.admin_as', 'admin.'),
-            'middleware' => config('mm-events.admin_middleware', ['web', 'auth'])
+            'middleware' => config('mm-events.admin_middleware', ['web', 'auth']),
         ], function () {
             $this->loadRoutesFrom(__DIR__ . '/../routes/admin.php');
         });
