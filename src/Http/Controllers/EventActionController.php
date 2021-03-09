@@ -41,6 +41,6 @@ class EventActionController extends Controller
 
         return $request->wantsJson()
                 ? new JsonResponse('', 200)
-                : redirect()->back()->with('info', 'Die Veranstaltung wurde ins Entwurfsstadium zurück versetzt.');
+                : redirect()->back()->with('info', 'Die Veranstaltung wurde ins Entwurfsstadium zurückversetzt.');
     }
 }
