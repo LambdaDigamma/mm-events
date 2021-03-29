@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use LambdaDigamma\MMEvents\MMEventsServiceProvider;
 use LaravelPublishable\LaravelPublishableServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Spatie\Translatable\TranslatableServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -25,6 +26,7 @@ class TestCase extends Orchestra
         return [
             MMEventsServiceProvider::class,
             LaravelPublishableServiceProvider::class,
+            TranslatableServiceProvider::class,
         ];
     }
 

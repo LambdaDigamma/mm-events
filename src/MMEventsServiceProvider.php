@@ -63,6 +63,7 @@ class MMEventsServiceProvider extends ServiceProvider
         Route::bind('anyevent', function ($id) {
             return Event::query()
                 ->withTrashed()
+                ->withNotPublished()
                 ->withArchived()
                 ->findOrFail($id);
         });
