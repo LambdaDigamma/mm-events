@@ -3,7 +3,6 @@
 namespace LambdaDigamma\MMEvents\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use LambdaDigamma\MMEvents\Http\Requests\StoreEventRequest;
 use LambdaDigamma\MMEvents\Http\Requests\UpdateGeneralEvent;
 use LambdaDigamma\MMEvents\Models\Event;

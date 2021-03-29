@@ -20,7 +20,7 @@ class StoreEventTest extends TestCase
             ->actingAs(UserFactory::new()->create())
             ->post(route('admin.events.store'), [
                 'name' => 'New Name',
-                'description' => 'An optional description'
+                'description' => 'An optional description',
             ])
             ->assertStatus(302);
 
@@ -38,13 +38,13 @@ class StoreEventTest extends TestCase
             ->actingAs(UserFactory::new()->create())
             ->postJson(route('admin.events.store'), [
                 'name' => 'New Name',
-                'description' => 'An optional description'
+                'description' => 'An optional description',
             ])
             ->assertStatus(302)
             ->assertJson([
                 'id' => 1,
                 'name' => 'New Name',
-                'description' => 'An optional description'
+                'description' => 'An optional description',
             ]);
 
         $event = Event::withNotPublished()->first();

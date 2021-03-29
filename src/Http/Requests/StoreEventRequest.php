@@ -6,7 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreEventRequest extends FormRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -29,5 +28,4 @@ class StoreEventRequest extends FormRequest
             'description' => 'nullable|string|min:3|max:1000',
         ];
     }
-
 }
