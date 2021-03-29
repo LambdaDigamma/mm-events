@@ -25,7 +25,7 @@ class UpdateEventTest extends TestCase
             'name' => 'New Name',
         ]);
 
-        tap(Event::first(), function ($updatedEvent) use ($response) {
+        tap(Event::withNotPublished()->first(), function ($updatedEvent) use ($response) {
             $this->assertEquals('New Name', $updatedEvent->name);
             $response->assertRedirect();
         });

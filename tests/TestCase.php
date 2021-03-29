@@ -7,6 +7,7 @@ use LambdaDigamma\MMEvents\MMEventsServiceProvider;
 use LaravelArchivable\LaravelArchivableServiceProvider;
 use LaravelPublishable\LaravelPublishableServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Spatie\LaravelRay\RayServiceProvider;
 use Spatie\Translatable\TranslatableServiceProvider;
 
 class TestCase extends Orchestra
@@ -29,6 +30,7 @@ class TestCase extends Orchestra
             LaravelArchivableServiceProvider::class,
             LaravelPublishableServiceProvider::class,
             TranslatableServiceProvider::class,
+            RayServiceProvider::class,
         ];
     }
 

@@ -3,14 +3,20 @@
 namespace LambdaDigamma\MMEvents\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use LambdaDigamma\MMEvents\Http\Requests\StoreEventRequest;
 use LambdaDigamma\MMEvents\Http\Requests\UpdateGeneralEvent;
 use LambdaDigamma\MMEvents\Models\Event;
 
 class EventController extends Controller
 {
-    public function store()
+    public function store(StoreEventRequest $request)
     {
-        //
+        $event = Event::create($request->validated());
+
+        return $request->wantsJson()
+                ? new JsonResponse($event, 302)
+                : back()->with('success', 'Die Veranstaltung wurde erstellt.')->with('data', ['id' => $event->id]);
     }
 
     public function update(UpdateGeneralEvent $request, Event $event)

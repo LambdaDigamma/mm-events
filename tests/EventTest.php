@@ -85,20 +85,24 @@ class EventTest extends TestCase
     public function testScopeUpcomingToday()
     {
         $eventPreviousDay = Event::factory()
+            ->published()
             ->create([
                 'start_date' => Carbon::now()->addDays(-1),
             ]);
 
         $eventAlreadyActive = Event::factory()
+            ->published()
             ->create([
                 'start_date' => Carbon::now()->addMinutes(-60),
             ]);
 
         $eventUpcomingToday = Event::factory()
+            ->published()
             ->upcomingToday()
             ->create();
 
         $eventTomorrow = Event::factory()
+            ->published()
             ->create([
                 'start_date' => Carbon::now()->addDay(),
             ]);
