@@ -4,6 +4,7 @@ namespace LambdaDigamma\MMEvents\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use LambdaDigamma\MMEvents\MMEventsServiceProvider;
+use LaravelArchivable\LaravelArchivableServiceProvider;
 use LaravelPublishable\LaravelPublishableServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\Translatable\TranslatableServiceProvider;
@@ -25,6 +26,7 @@ class TestCase extends Orchestra
     {
         return [
             MMEventsServiceProvider::class,
+            LaravelArchivableServiceProvider::class,
             LaravelPublishableServiceProvider::class,
             TranslatableServiceProvider::class,
         ];

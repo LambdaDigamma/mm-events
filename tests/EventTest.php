@@ -114,20 +114,24 @@ class EventTest extends TestCase
     public function testScopeNextDays()
     {
         $eventPreviousDay = Event::factory()
+            ->published()
             ->create([
                 'start_date' => Carbon::now()->addDays(-1),
             ]);
 
         $eventAlreadyActive = Event::factory()
+            ->published()
             ->create([
                 'start_date' => Carbon::now()->addMinutes(-60),
             ]);
 
         $eventUpcomingToday = Event::factory()
+            ->published()
             ->upcomingToday()
             ->create();
 
         $eventTomorrow = Event::factory()
+            ->published()
             ->create([
                 'start_date' => Carbon::now()->addDay(),
             ]);
@@ -143,30 +147,39 @@ class EventTest extends TestCase
     public function scopeSortChoronologically()
     {
         $eventUpcomingToday = Event::factory()
+            ->published()
             ->upcomingToday()
             ->create();
 
         $eventTomorrow = Event::factory()
+            ->published()
             ->create([
                 'start_date' => Carbon::now()->addDay(),
             ]);
 
         $eventPreviousDay = Event::factory()
+            ->published()
             ->create([
                 'start_date' => Carbon::now()->addDays(-1),
             ]);
 
         $eventAlreadyActive = Event::factory()
+            ->published()
             ->create([
                 'start_date' => Carbon::now()->addMinutes(-60),
             ]);
 
         $eventNoDate = Event::factory()
+            ->published()
             ->create([
                 'start_date' => null,
             ]);
 
-        $scopedEventsDatabase = Event::query()->chronological()->get()->pluck('id');
+        $scopedEventsDatabase = Event::query()
+            ->withNotPublished()
+            ->chronological()
+            ->get()
+            ->pluck('id');
 
         $this->assertEquals($scopedEventsDatabase->toArray(), collect([
             $eventPreviousDay->id,
@@ -180,6 +193,7 @@ class EventTest extends TestCase
     public function testIcsExportActiveStart()
     {
         $event = Event::factory()
+            ->published()
             ->activeStart()
             ->create();
 
@@ -189,6 +203,7 @@ class EventTest extends TestCase
     public function testIcsExportFailsNoDates()
     {
         $event = Event::factory()
+            ->published()
             ->create([
                 'start_date' => null,
                 'end_date' => null,
