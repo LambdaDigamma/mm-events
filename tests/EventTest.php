@@ -16,14 +16,17 @@ class EventTest extends TestCase
     public function testScopeActive()
     {
         $activeEventStartEnd = Event::factory()
+            ->published()
             ->activeStartEnd()
             ->create();
 
         $activeEventInDeadline = Event::factory()
+            ->published()
             ->activeStart()
             ->create();
 
         $upcomingStartEvent = Event::factory()
+            ->published()
             ->upcomingStart()
             ->create();
 
@@ -46,7 +49,7 @@ class EventTest extends TestCase
             ->notPublished()
             ->create();
 
-        $events = Event::published()->pluck('id');
+        $events = Event::query()->pluck('id');
 
         $this->assertTrue($events->contains($publishedEvents->first()->id));
         $this->assertFalse($events->contains($notPublishedEvents->first()->id));
@@ -55,16 +58,19 @@ class EventTest extends TestCase
     public function testScopeToday()
     {
         $eventYesterday = Event::factory()
+            ->published()
             ->create([
                 'start_date' => Carbon::now()->addDays(-1),
             ]);
 
         $eventToday = Event::factory()
+            ->published()
             ->create([
                 'start_date' => Carbon::now(),
             ]);
 
         $eventTomorrow = Event::factory()
+            ->published()
             ->create([
                 'start_date' => Carbon::now()->addDays(1),
             ]);

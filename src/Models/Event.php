@@ -11,12 +11,14 @@ use LambdaDigamma\MMEvents\Database\Factories\EventFactory;
 use LambdaDigamma\MMEvents\Exceptions\InvalidLink;
 use LambdaDigamma\MMEvents\Link;
 use LaravelArchivable\Archivable;
+use LaravelPublishable\Publishable;
 use Spatie\Translatable\HasTranslations;
 
 class Event extends Model
 {
     use SoftDeletes;
     use Archivable;
+    use Publishable;
     use HasFactory;
     use HasTranslations;
 
@@ -35,7 +37,7 @@ class Event extends Model
 
     public $translatable = ['name', 'description', 'category'];
 
-    public $dates = ['start_date', 'end_date', 'scheduled_at', 'published_at'];
+    public $dates = ['start_date', 'end_date', 'scheduled_at'];
 
     public function toArray()
     {
@@ -51,28 +53,6 @@ class Event extends Model
     protected static function newFactory()
     {
         return EventFactory::new();
-    }
-
-    /**
-     * Marks the event as published by setting
-     * `published_at` to current timestamp.
-     */
-    public function publish()
-    {
-        $this->published_at = Carbon::now();
-
-        return $this->save();
-    }
-
-    /**
-     * Marks the event as not publsihed by resetting
-     * `published_at` to null.
-     */
-    public function unpublish()
-    {
-        $this->published_at = null;
-
-        return $this->save();
     }
 
     /**
@@ -194,12 +174,6 @@ class Event extends Model
     public function scopeDrafts(Builder $query)
     {
         return $query->where('published_at', '=', null);
-    }
-
-    public function scopePublished($query)
-    {
-        return $query
-            ->where('published_at', '<=', Carbon::now()->toDateTimeString());
     }
 
     public function scopeFilter($query, array $filters)
