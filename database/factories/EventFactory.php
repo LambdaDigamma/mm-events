@@ -17,7 +17,7 @@ class EventFactory extends Factory
             'description' => $this->faker->realText(200),
             'url' => $this->faker->url,
             'image_path' => $this->faker->imageUrl(640, 480),
-            'published_at' => $this->faker->boolean(85) ? $this->faker->dateTimeBetween('-60 days', '-1 days') : null,
+            // 'published_at' => $this->faker->boolean(85) ? $this->faker->dateTimeBetween('-60 days', '-1 days') : null,
             'extras' => collect(['locationName' => $this->faker->word()]),
         ];
     }
@@ -67,8 +67,7 @@ class EventFactory extends Factory
     public function published() 
     {
         return $this->state(fn () => [
-            'published_at' => $this->faker->dateTimeBetween('-60 days', '-1 days'),
-            'scheduled_at' => null,
+            'published_at' => now(),
         ]);
     }
 
@@ -76,7 +75,20 @@ class EventFactory extends Factory
     {
         return $this->state(fn () => [
             'published_at' => null,
-            'scheduled_at' => $this->faker->dateTimeInInterval('tomorrow', '+ 10 days')
+        ]);
+    }
+
+    public function scheduledInFuture()
+    {
+        return $this->state(fn () => [
+            'scheduled_at' => $this->faker->dateTimeInInterval('tomorrow')
+        ]);
+    }
+
+    public function notScheduled()
+    {
+        return $this->state(fn () => [
+            'scheduled_at' => null
         ]);
     }
 

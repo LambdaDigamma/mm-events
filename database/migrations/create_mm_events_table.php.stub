@@ -27,9 +27,9 @@ class CreateMMEventsTable extends Migration
             $table->integer('place_id')->unsigned()->nullable();
             $table->uuid('platform_id')->nullable()->unique();
             $table->json('extras')->nullable();
-            $table->timestamp('published_at')->nullable();
             $table->timestamp('scheduled_at')->nullable();
             $table->timestamps();
+            $table->publishedAt();
             $table->archivedAt();
             $table->softDeletes();
         });
