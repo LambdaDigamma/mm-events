@@ -4,7 +4,9 @@ namespace LambdaDigamma\MMEvents\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use LambdaDigamma\MMEvents\Models\Event;
+use LambdaDigamma\MMEvents\Http\Requests\PublishEvent;
 
 class EventActionController extends Controller
 {
@@ -26,13 +28,14 @@ class EventActionController extends Controller
                 : redirect()->back()->with('success', 'Das Archivieren wurde rückgängig gemacht.');
     }
 
-    public function publish(Request $request, Event $event)
+    public function publish(PublishEvent $request, Event $event)
     {
-        $event->publish();
+        $published_at = request()->published_at;
+        $event->scheduleFor($published_at ? Carbon::parse($published_at) : now());
 
         return $request->wantsJson()
-                ? new JsonResponse('', 200)
-                : redirect()->back()->with('success', 'Die Veranstaltung wurde veröffentlicht.');
+            ? new JsonResponse('', 200)
+            : redirect()->back()->with('info', 'Der Veröffentlichungszeitpunkt wurde festgelegt.');
     }
 
     public function unpublish(Request $request, Event $event)
