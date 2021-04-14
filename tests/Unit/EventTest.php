@@ -1,12 +1,13 @@
 <?php
 
-namespace LambdaDigamma\MMEvents\Tests;
+namespace LambdaDigamma\MMEvents\Tests\Unit;
 
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use LambdaDigamma\MMEvents\Exceptions\InvalidLink;
 use LambdaDigamma\MMEvents\Models\Event;
+use LambdaDigamma\MMEvents\Tests\TestCase;
 
 class EventTest extends TestCase
 {
