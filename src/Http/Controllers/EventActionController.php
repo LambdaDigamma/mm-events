@@ -5,8 +5,8 @@ namespace LambdaDigamma\MMEvents\Http\Controllers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use LambdaDigamma\MMEvents\Models\Event;
 use LambdaDigamma\MMEvents\Http\Requests\PublishEvent;
+use LambdaDigamma\MMEvents\Models\Event;
 
 class EventActionController extends Controller
 {
