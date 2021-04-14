@@ -92,4 +92,18 @@ class EventFactory extends Factory
         ]);
     }
 
+    public function archived()
+    {
+        return $this->state(fn () => [
+            'archived_at' => now()
+        ]);
+    }
+
+    public function notArchived()
+    {
+        return $this->state(fn () => [
+            'archived_at' => null
+        ]);
+    }
+
 }

@@ -50,7 +50,7 @@ class Event extends Model
         return $attributes;
     }
 
-    protected static function newFactory()
+    protected static function newFactory(): EventFactory
     {
         return EventFactory::new();
     }
@@ -98,7 +98,7 @@ class Event extends Model
             });
     }
 
-    public function scopeToday(Builder $query)
+    public function scopeToday(Builder $query): Builder
     {
         $now = Carbon::now()->toDateTimeString();
         $today = Carbon::today()->toDateString();
@@ -165,18 +165,18 @@ class Event extends Model
             ->orWhere('start_date', '=', null);
     }
 
-    public function scopePast(Builder $query)
+    public function scopePast(Builder $query): Builder
     {
         return $query
             ->where('start_date', '<=', now()->toDateString());
     }
 
-    public function scopeDrafts(Builder $query)
+    public function scopeDrafts(Builder $query): Builder
     {
         return $query->where('published_at', '=', null);
     }
 
-    public function scopeFilter($query, array $filters)
+    public function scopeFilter($query, array $filters): void
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where('name', 'like', '%'.$search.'%');

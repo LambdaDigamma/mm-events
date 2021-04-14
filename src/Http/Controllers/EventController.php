@@ -9,6 +9,9 @@ use LambdaDigamma\MMEvents\Models\Event;
 
 class EventController extends Controller
 {
+    /**
+     * @return JsonResponse|\Illuminate\Http\RedirectResponse
+     */
     public function store(StoreEventRequest $request)
     {
         $event = Event::create($request->validated());
@@ -18,6 +21,9 @@ class EventController extends Controller
                 : back()->with('success', 'Die Veranstaltung wurde erstellt.')->with('data', ['id' => $event->id]);
     }
 
+    /**
+     * @return JsonResponse|\Illuminate\Http\RedirectResponse
+     */
     public function update(UpdateGeneralEvent $request, Event $event)
     {
         $event->update($request->validated());

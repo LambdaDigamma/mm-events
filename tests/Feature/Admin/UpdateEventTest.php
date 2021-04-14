@@ -1,6 +1,6 @@
 <?php
 
-namespace LambdaDigamma\MMEvents\Tests\Feature;
+namespace LambdaDigamma\MMEvents\Tests\Feature\Admin;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use LambdaDigamma\MMEvents\Models\Event;

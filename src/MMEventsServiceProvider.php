@@ -9,7 +9,7 @@ use LambdaDigamma\MMEvents\Models\Event;
 
 class MMEventsServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
@@ -58,7 +58,7 @@ class MMEventsServiceProvider extends ServiceProvider
         return false;
     }
 
-    protected function registerRoutes()
+    protected function registerRoutes(): void
     {
         Route::bind('anyevent', function ($id) {
             return Event::query()
@@ -67,7 +67,6 @@ class MMEventsServiceProvider extends ServiceProvider
                 ->withArchived()
                 ->findOrFail($id);
         });
-
 
         // Route::group($this->routeConfiguration(), function () {
         //     $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
@@ -82,7 +81,12 @@ class MMEventsServiceProvider extends ServiceProvider
         });
     }
 
-    protected function routeConfiguration()
+    /**
+     * @return (\Illuminate\Config\Repository|mixed)[]
+     *
+     * @psalm-return array{prefix: \Illuminate\Config\Repository|mixed, middleware: \Illuminate\Config\Repository|mixed}
+     */
+    protected function routeConfiguration(): array
     {
         return [
             'prefix' => config('mm-events.api_prefix'),
