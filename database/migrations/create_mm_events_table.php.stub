@@ -30,6 +30,7 @@ class CreateMMEventsTable extends Migration
             $table->timestamp('scheduled_at')->nullable();
             $table->timestamps();
             $table->publishedAt();
+            $table->timestamp('cancelled_at')->nullable();
             $table->archivedAt();
             $table->softDeletes();
         });

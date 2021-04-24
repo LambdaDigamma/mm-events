@@ -37,7 +37,7 @@ class Event extends Model
 
     public $translatable = ['name', 'description', 'category'];
 
-    public $dates = ['start_date', 'end_date', 'scheduled_at'];
+    public $dates = ['start_date', 'end_date', 'scheduled_at', 'cancelled_at'];
 
     public function toArray()
     {
@@ -178,8 +178,9 @@ class Event extends Model
 
     public function scopeFilter($query, array $filters): void
     {
-        $query->when($filters['search'] ?? null, function ($query, $search) {
-            $query->where('name', 'like', '%'.$search.'%');
+        $locale = app()->getLocale();
+        $query->when($filters['search'] ?? null, function ($query, $search) use ($locale) {
+            $query->where("name->${locale}", 'like', '%'.$search.'%');
         })->when($filters['type'] ?? null, function ($query, $type) {
             if ($type === 'upcoming') {
                 $query->future();
