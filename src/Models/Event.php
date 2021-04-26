@@ -179,8 +179,11 @@ class Event extends Model
     public function scopeFilter($query, array $filters): void
     {
         $locale = app()->getLocale();
-        $query->when($filters['search'] ?? null, function ($query, $search) use ($locale) {
-            $query->where("name->${locale}", 'like', '%'.$search.'%');
+        $fallback = config('app.fallback_locale', 'en');
+        $query->when($filters['search'] ?? null, function ($query, $search) use ($locale, $fallback) {
+            $query
+                ->where("name->${locale}", 'like', '%'.$search.'%')
+                ->orWhere("name->${fallback}", 'like', '%'.$search.'%');
         })->when($filters['type'] ?? null, function ($query, $type) {
             if ($type === 'upcoming') {
                 $query->future();
