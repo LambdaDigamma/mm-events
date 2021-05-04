@@ -3,6 +3,7 @@
 namespace LambdaDigamma\MMEvents\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Carbon;
 use LambdaDigamma\MMEvents\Http\Requests\StoreEventRequest;
 use LambdaDigamma\MMEvents\Http\Requests\UpdateGeneralEvent;
 use LambdaDigamma\MMEvents\Models\Event;
@@ -26,7 +27,17 @@ class EventController extends Controller
      */
     public function update(UpdateGeneralEvent $request, Event $event)
     {
-        $event->update($request->validated());
+        $event->fill($request->except(['start_date', 'end_date']));
+        
+        $event->start_date = Carbon::parse($request->start_date)
+            ->timezone(config('app.timezone', 'UTC'))
+            ->toDateTimeLocalString();
+
+        $event->end_date = Carbon::parse($request->end_date)
+            ->timezone(config('app.timezone', 'UTC'))
+            ->toDateTimeLocalString();
+
+        $event->save();
 
         return $request->wantsJson()
                 ? new JsonResponse('', 200)
