@@ -29,13 +29,21 @@ class EventController extends Controller
     {
         $event->fill($request->except(['start_date', 'end_date']));
         
-        $event->start_date = Carbon::parse($request->start_date)
-            ->timezone(config('app.timezone', 'UTC'))
-            ->toDateTimeLocalString();
+        if ($request->start_date != null) {
+            $event->start_date = Carbon::parse($request->start_date)
+                ->timezone(config('app.timezone', 'UTC'))
+                ->toDateTimeLocalString();
+        } else {
+            $event->start_date = null;
+        }
 
-        $event->end_date = Carbon::parse($request->end_date)
-            ->timezone(config('app.timezone', 'UTC'))
-            ->toDateTimeLocalString();
+        if ($request->end_date != null) {
+            $event->end_date = Carbon::parse($request->end_date)
+                ->timezone(config('app.timezone', 'UTC'))
+                ->toDateTimeLocalString();
+        } else {
+            $event->end_date = null;
+        }
 
         $event->save();
 
