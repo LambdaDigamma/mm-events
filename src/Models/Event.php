@@ -3,7 +3,9 @@
 namespace LambdaDigamma\MMEvents\Models;
 
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -31,13 +33,14 @@ class Event extends Model
         'extras', 'published_at', 'scheduled_at',
     ];
 
-    protected $casts = [
-        'extras' => 'array',
-    ];
-
+    protected $casts = ['extras' => AsCollection::class,];
+    protected $appends = ['attendance_mode'];
     public $translatable = ['name', 'description', 'category'];
-
     public $dates = ['start_date', 'end_date', 'scheduled_at', 'cancelled_at'];
+
+    public const ATTENDANCE_MIXED = "mixed";
+    public const ATTENDANCE_OFFLINE = "offline";
+    public const ATTENDANCE_ONLINE = "online";
 
     public function toArray()
     {
@@ -76,6 +79,45 @@ class Event extends Model
             ->description($this->description);
 
         return $link->ics();
+    }
+
+    public function jsonLd()
+    {
+        $attendanceModeSchema = "https://schema.org/OfflineEventAttendanceMode";
+
+        if ($this->attendance_mode == self::ATTENDANCE_ONLINE) {
+            $attendanceModeSchema = "https://schema.org/OnlineEventAttendanceMode";
+        } elseif ($this->attendance_mode == self::ATTENDANCE_MIXED) {
+            $attendanceModeSchema = "https://schema.org/MixedEventAttendanceMode";
+        }
+
+        return [
+            '@type' => 'Event',
+            'name' => $this->name,
+            'startDate' => $this->start_date ? $this->start_date->tz('UTC')->toAtomString() : null,
+            'endDate' => $this->end_date ? $this->end_date->tz('UTC')->toAtomString() : null,
+            'eventStatus' => $this->cancelled_at == null ? 'https://schema.org/EventScheduled' : 'https://schema.org/EventCancelled',
+            'eventAttendanceMode' => $attendanceModeSchema,
+            'description' => $this->description
+        ];
+    }
+
+    public function getAttendanceModeAttribute()
+    {
+        return $this->extras ? $this->extras->get('attendance_mode', null) : null;
+    }
+
+    public function setAttendanceModeAttribute($value): void
+    {
+        if (! collect([self::ATTENDANCE_MIXED, self::ATTENDANCE_OFFLINE, self::ATTENDANCE_ONLINE])->contains($value)) {
+            throw new Exception('Attendance mode unknown. Only offline, online and mixed is allowed.');
+        }
+        
+        if ($this->extras) {
+            $this->extras->put('attendance_mode', $value);
+        } else {
+            $this->extras = collect(['attendance_mode' => $value]);
+        }
     }
 
     public function scopeActive($query)

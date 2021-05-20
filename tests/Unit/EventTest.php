@@ -3,6 +3,7 @@
 namespace LambdaDigamma\MMEvents\Tests\Unit;
 
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use LambdaDigamma\MMEvents\Exceptions\InvalidLink;
@@ -241,5 +242,48 @@ class EventTest extends TestCase
         $this->assertNotNull($event->published_at);
         $event->unpublish();
         $this->assertNull($event->published_at);
+    }
+
+    public function testSettingMixedAttendance()
+    {
+        $event = Event::factory()
+            ->upcomingToday()
+            ->published()
+            ->create([
+                'extras' => []
+            ]);
+        $event->attendance_mode = 'mixed';
+        $this->assertEquals('mixed', $event->attendance_mode);
+    }
+
+    public function testSettingOnlineAttendance()
+    {
+        $event = Event::factory()
+            ->upcomingToday()
+            ->published()
+            ->create();
+        $event->attendance_mode = 'online';
+        $this->assertEquals('online', $event->attendance_mode);
+    }
+
+    public function testSettingOfflineAttendance()
+    {
+        $event = Event::factory()
+            ->upcomingToday()
+            ->published()
+            ->create();
+        $event->attendance_mode = 'offline';
+        $this->assertEquals('offline', $event->attendance_mode);
+    }
+
+    public function testSettingUnknownAttendanceFails()
+    {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Attendance mode unknown. Only offline, online and mixed is allowed.');
+        $event = Event::factory()
+            ->upcomingToday()
+            ->published()
+            ->create();
+        $event->attendance_mode = 'something-else';
     }
 }
