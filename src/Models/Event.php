@@ -72,7 +72,7 @@ class Event extends Model
         if ($start_date == null) {
             throw InvalidLink::noStartDateProvided();
         } elseif ($end_date == null) {
-            $end_date = Carbon::now()->addMinutes(config('mm-events.event_default_duration'));
+            $end_date = $start_date->addMinutes(config('mm-events.event_default_duration'));
         }
 
         $link = Link::create($this->name, $start_date, $end_date)
