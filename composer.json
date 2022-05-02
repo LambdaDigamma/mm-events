@@ -22,7 +22,7 @@
     ],
     "require": {
         "php": "^8.0",
-        "illuminate/contracts": "^^9.0",
+        "illuminate/contracts": "^9.0",
         "joelbutcher/laravel-archivable": "^1.1",
         "lambdadigamma/laravel-publishable": "^1.0.0",
         "spatie/laravel-translatable": "^5.0"
