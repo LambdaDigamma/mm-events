@@ -311,4 +311,71 @@ class EventTest extends TestCase
         $this->assertEquals(0, Event::query()->collection('collection-2')->count());
 
     }
+
+    public function testFilterScope()
+    {
+        $eventsWithCollection = Event::factory()
+            ->times(3)
+            ->published()
+            ->create([
+                'extras' => [
+                    'collection' => 'collection-1',
+                ]
+            ]);
+
+        $eventsWithCollection2 = Event::factory()
+            ->times(2)
+            ->published()
+            ->create([
+                'extras' => [
+                    'collection' => 'collection-2',
+                ]
+            ]);
+
+        $eventsWithoutCollection = Event::factory()
+            ->times(4)
+            ->published()
+            ->create([
+                'extras' => []
+            ]);
+
+        $countCollection2 = Event::query()
+            ->filter(['collection' => 'collection-2'])
+            ->count();
+
+        $countCollection1 = Event::query()
+            ->filter(['collection' => 'collection-1'])
+            ->count();
+
+        $this->assertEquals(2, $countCollection2);
+        $this->assertEquals(3, $countCollection1);
+
+    }
+
+    public function testDurationNoStartDate()
+    {
+        $event = Event::factory()->create([
+            'start_date' => null,
+            'end_date' => null,
+        ]);
+        $this->assertNull($event->duration);
+    }
+
+    public function testDurationOnlyStartDate()
+    {
+        $event = Event::factory()->create([
+            'start_date' => Carbon::now()->addDay(),
+            'end_date' => null,
+        ]);
+        $this->assertEquals(30, $event->duration);
+    }
+
+    public function testDuration55MinutesWithStartAndEndDate()
+    {
+        $event = Event::factory()->create([
+            'start_date' => Carbon::now()->addMinutes(45),
+            'end_date' => Carbon::now()->addMinutes(100),
+        ]);
+        $this->assertEquals(55, $event->duration);
+    }
 }

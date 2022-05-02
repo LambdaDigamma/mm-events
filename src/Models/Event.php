@@ -34,7 +34,7 @@ class Event extends Model
     ];
 
     protected $casts = ['extras' => AsCollection::class,];
-    protected $appends = ['attendance_mode'];
+    protected $appends = ['attendance_mode', 'duration'];
     public $translatable = ['name', 'description', 'category'];
     public $dates = ['start_date', 'end_date', 'scheduled_at', 'cancelled_at'];
 
@@ -117,6 +117,17 @@ class Event extends Model
             $this->extras->put('attendance_mode', $value);
         } else {
             $this->extras = collect(['attendance_mode' => $value]);
+        }
+    }
+
+    public function getDurationAttribute()
+    {
+        if ($this->start_date && $this->end_date) {
+            return $this->end_date->diffInMinutes($this->start_date);
+        } else if ($this->start_date) {
+            return config('mm-events.event_default_duration', 30);
+        } else {
+            return null;
         }
     }
 
@@ -222,29 +233,35 @@ class Event extends Model
     {
         $locale = app()->getLocale();
         $fallback = config('app.fallback_locale', 'en');
-        $query->when($filters['search'] ?? null, function ($query, $search) use ($locale, $fallback) {
-            $query
-                ->where("name->${locale}", 'like', '%'.$search.'%')
-                ->orWhere("name->${fallback}", 'like', '%'.$search.'%');
-        })->when($filters['type'] ?? null, function ($query, $type) {
-            if ($type === 'upcoming') {
-                $query->future();
-            } elseif ($type === 'past') {
-                $query->past();
-            } elseif ($type === 'drafts') {
-                $query->drafts();
-            } elseif ($type === 'archived') {
-                $query->onlyArchived();
-            } elseif ($type === 'deleted') {
-                $query->onlyTrashed();
-            }
-        })->when($filters['trashed'] ?? null, function ($query, $trashed) {
-            if ($trashed === 'with') {
-                $query->withTrashed();
-            } elseif ($trashed === 'only') {
-                $query->onlyTrashed();
-            }
-        });
+        $query
+            ->when($filters['search'] ?? null, function ($query, $search) use ($locale, $fallback) {
+                $query
+                    ->where("name->${locale}", 'like', '%'.$search.'%')
+                    ->orWhere("name->${fallback}", 'like', '%'.$search.'%');
+            })
+            ->when($filters['type'] ?? null, function ($query, $type) {
+                if ($type === 'upcoming') {
+                    $query->future();
+                } elseif ($type === 'past') {
+                    $query->past();
+                } elseif ($type === 'drafts') {
+                    $query->drafts();
+                } elseif ($type === 'archived') {
+                    $query->onlyArchived();
+                } elseif ($type === 'deleted') {
+                    $query->onlyTrashed();
+                }
+            })
+            ->when($filters['collection'] ?? null, function ($query, $collection) {
+                $query->collection($collection);
+            })
+            ->when($filters['trashed'] ?? null, function ($query, $trashed) {
+                if ($trashed === 'with') {
+                    $query->withTrashed();
+                } elseif ($trashed === 'only') {
+                    $query->onlyTrashed();
+                }
+            });
     }
 
     public function scopeCollection(Builder $query, string $collectionName): Builder
