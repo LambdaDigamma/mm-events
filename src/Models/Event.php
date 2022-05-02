@@ -42,7 +42,7 @@ class Event extends Model
     public const ATTENDANCE_OFFLINE = "offline";
     public const ATTENDANCE_ONLINE = "online";
 
-    public function toArray()
+    public function toArray(): array
     {
         $attributes = parent::toArray();
 
@@ -112,7 +112,7 @@ class Event extends Model
         if (! collect([self::ATTENDANCE_MIXED, self::ATTENDANCE_OFFLINE, self::ATTENDANCE_ONLINE])->contains($value)) {
             throw new Exception('Attendance mode unknown. Only offline, online and mixed is allowed.');
         }
-        
+
         if ($this->extras) {
             $this->extras->put('attendance_mode', $value);
         } else {
@@ -245,5 +245,15 @@ class Event extends Model
                 $query->onlyTrashed();
             }
         });
+    }
+
+    public function scopeCollection(Builder $query, string $collectionName): Builder
+    {
+        return $query->where('extras->collection', '=', $collectionName);
+    }
+
+    public function scopeNoCollection(Builder $query): Builder
+    {
+        return $query->whereNull('extras->collection');
     }
 }

@@ -14,7 +14,7 @@ class EventTest extends TestCase
 {
     use DatabaseMigrations;
     use RefreshDatabase;
-    
+
     public function testScopeActive()
     {
         $activeEventStartEnd = Event::factory()
@@ -110,7 +110,7 @@ class EventTest extends TestCase
             ]);
 
         $scopedEventsDatabase = Event::upcomingToday()->pluck('id');
-        
+
         $this->assertFalse($scopedEventsDatabase->contains($eventPreviousDay->id));
         $this->assertFalse($scopedEventsDatabase->contains($eventAlreadyActive->id));
         $this->assertTrue($scopedEventsDatabase->contains($eventUpcomingToday->id));
@@ -143,14 +143,14 @@ class EventTest extends TestCase
             ]);
 
         $scopedEventsDatabase = Event::nextDays()->pluck('id');
-        
+
         $this->assertFalse($scopedEventsDatabase->contains($eventPreviousDay->id));
         $this->assertFalse($scopedEventsDatabase->contains($eventAlreadyActive->id));
         $this->assertFalse($scopedEventsDatabase->contains($eventUpcomingToday->id));
         $this->assertTrue($scopedEventsDatabase->contains($eventTomorrow->id));
     }
 
-    public function scopeSortChoronologically()
+    public function scopeSortChronologically()
     {
         $eventUpcomingToday = Event::factory()
             ->published()
@@ -285,5 +285,30 @@ class EventTest extends TestCase
             ->published()
             ->create();
         $event->attendance_mode = 'something-else';
+    }
+
+    public function testCollectionScopes()
+    {
+        $eventsWithCollection = Event::factory()
+            ->times(3)
+            ->published()
+            ->create([
+                'extras' => [
+                    'collection' => 'collection-1',
+                ]
+            ]);
+
+        $eventsWithoutCollection = Event::factory()
+            ->times(4)
+            ->published()
+            ->create([
+                'extras' => []
+            ]);
+
+        $this->assertEquals(7, Event::query()->count());
+        $this->assertEquals(4, Event::query()->noCollection()->count());
+        $this->assertEquals(3, Event::query()->collection('collection-1')->count());
+        $this->assertEquals(0, Event::query()->collection('collection-2')->count());
+
     }
 }

@@ -28,7 +28,8 @@ class EventController extends Controller
     public function update(UpdateGeneralEvent $request, Event $event)
     {
         $event->fill($request->except(['start_date', 'end_date']));
-        
+        $event->extras?->put('collection', $request->get(key: 'collection'));
+
         if ($request->start_date != null) {
             $event->start_date = Carbon::parse($request->start_date)
                 ->timezone(config('app.timezone', 'UTC'))
