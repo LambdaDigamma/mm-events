@@ -8,6 +8,11 @@
 
 A package providing events for the Mein Moers platform.
 
+> **Warning**
+> 
+> This repository is in an experimental state and is used for a few projects under active development. 
+> Feel free to use it but be aware that some things may change in the future.
+
 ## Installation
 
 You can install the package via composer:
