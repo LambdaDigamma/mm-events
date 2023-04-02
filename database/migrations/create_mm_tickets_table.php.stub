@@ -1,0 +1,65 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateMMTicketsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('mm_tickets', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->json('name');
+            $table->json('description')->nullable();
+            $table->string('url')->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->json('extras')->nullable();
+            $table->timestamps();
+            $table->publishedAt();
+            $table->archivedAt();
+            $table->softDeletes();
+        });
+
+        Schema::create('mm_ticket_options', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->json('name');
+            $table->decimal('price', 15, 2)->nullable();
+            $table->foreignId('ticket_id')
+                ->references('id')
+                ->on('mm_tickets');
+            $table->string('url')->nullable();
+            $table->json('extras')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('mm_ticket_assignments', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->foreignId('ticket_id')
+                ->references('id')
+                ->on('mm_tickets');
+            $table->foreignId('event_id')
+                ->references('id')
+                ->on('mm_events');
+            $table->unique(['ticket_id', 'event_id']);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('mm_tickets');
+        Schema::dropIfExists('mm_ticket_options');
+        Schema::dropIfExists('mm_ticket_assignments');
+    }
+}

@@ -273,4 +273,12 @@ class Event extends Model
     {
         return $query->whereNull('extras->collection');
     }
+
+    public function ticketAssignments()
+    {
+        return $this->belongsToMany(
+            Ticket::class,
+            'mm_ticket_assignments',
+        )->using(TicketAssignment::class);
+    }
 }

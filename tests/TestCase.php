@@ -49,5 +49,7 @@ class TestCase extends Orchestra
         $this->loadLaravelMigrations();
         include_once __DIR__.'/../database/migrations/create_mm_events_table.php.stub';
         (new \CreateMMEventsTable())->up();
+        include_once __DIR__.'/../database/migrations/create_mm_tickets_table.php.stub';
+        (new \CreateMMTicketsTable())->up();
     }
 }
