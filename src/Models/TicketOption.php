@@ -8,13 +8,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use LambdaDigamma\MMEvents\Database\Factories\TicketOptionFactory;
 use Spatie\Translatable\HasTranslations;
 
-
 class TicketOption extends Model
 {
     use HasFactory;
     use HasTranslations;
 
-    protected $table = "mm_ticket_options";
+    protected $table = 'mm_ticket_options';
 
     protected $translatable = [
         'name',
@@ -25,7 +24,7 @@ class TicketOption extends Model
         'price',
         'ticket_id',
         'url',
-        'extras'
+        'extras',
     ];
 
     protected static function newFactory(): TicketOptionFactory
@@ -48,5 +47,4 @@ class TicketOption extends Model
 
         return $attributes;
     }
-
 }

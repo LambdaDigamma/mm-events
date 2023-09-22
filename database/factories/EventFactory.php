@@ -22,7 +22,7 @@ class EventFactory extends Factory
         ];
     }
 
-    public function activeStartEnd() 
+    public function activeStartEnd()
     {
         return $this
             ->state(fn () => [
@@ -47,11 +47,11 @@ class EventFactory extends Factory
             ]);
     }
 
-    public function upcomingToday() 
+    public function upcomingToday()
     {
         return $this
             ->state(fn () => [
-                'start_date' => $this->faker->dateTimeBetween(Carbon::now()->toDateTimeString(), Carbon::now()->setHours(23)->setMinutes(59)->setSeconds(0)->toDateTimeString())
+                'start_date' => $this->faker->dateTimeBetween(Carbon::now()->toDateTimeString(), Carbon::now()->setHours(23)->setMinutes(59)->setSeconds(0)->toDateTimeString()),
             ]);
     }
 
@@ -64,7 +64,7 @@ class EventFactory extends Factory
     //     });
     // }
 
-    public function published() 
+    public function published()
     {
         return $this->state(fn () => [
             'published_at' => now(),
@@ -81,29 +81,28 @@ class EventFactory extends Factory
     public function scheduledInFuture()
     {
         return $this->state(fn () => [
-            'scheduled_at' => $this->faker->dateTimeInInterval('tomorrow')
+            'scheduled_at' => $this->faker->dateTimeInInterval('tomorrow'),
         ]);
     }
 
     public function notScheduled()
     {
         return $this->state(fn () => [
-            'scheduled_at' => null
+            'scheduled_at' => null,
         ]);
     }
 
     public function archived()
     {
         return $this->state(fn () => [
-            'archived_at' => now()
+            'archived_at' => now(),
         ]);
     }
 
     public function notArchived()
     {
         return $this->state(fn () => [
-            'archived_at' => null
+            'archived_at' => null,
         ]);
     }
-
 }

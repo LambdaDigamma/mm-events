@@ -16,5 +16,4 @@ class TicketOptionFactory extends Factory
             'price' => $this->faker->numberBetween(10, 40),
         ];
     }
-
 }

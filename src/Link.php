@@ -48,12 +48,8 @@ class Link
     }
 
     /**
-     * @param string $title
-     * @param \DateTimeInterface $from
-     * @param \DateTimeInterface $to
-     * @param bool $allDay
-     *
      * @return static
+     *
      * @throws InvalidLink
      */
     public static function create(string $title, DateTimeInterface $from, DateTimeInterface $to, bool $allDay = false)
@@ -62,11 +58,8 @@ class Link
     }
 
     /**
-     * @param string $title
-     * @param DateTimeInterface|\DateTime|\DateTimeImmutable $fromDate
-     * @param int $numberOfDays
+     * @param  DateTimeInterface|\DateTime|\DateTimeImmutable  $fromDate
      *
-     * @return Link
      * @throws InvalidLink
      */
     public static function createAllDay(string $title, DateTimeInterface $fromDate, int $numberOfDays = 1): self
@@ -78,8 +71,6 @@ class Link
     }
 
     /**
-     * @param string $description
-     *
      * @return $this
      */
     public function description(string $description)
@@ -90,8 +81,6 @@ class Link
     }
 
     /**
-     * @param string $address
-     *
      * @return $this
      */
     public function address(string $address)

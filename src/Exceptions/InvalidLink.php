@@ -16,6 +16,6 @@ class InvalidLink extends InvalidArgumentException
 
     public static function noStartDateProvided(): self
     {
-        return new self("No start date is provided.");
+        return new self('No start date is provided.');
     }
 }

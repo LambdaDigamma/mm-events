@@ -3,7 +3,6 @@
 namespace LambdaDigamma\MMEvents\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use LambdaDigamma\MMEvents\Models\Event;
 use LambdaDigamma\MMEvents\Models\Ticket;
 
 class TicketFactory extends Factory
@@ -34,15 +33,14 @@ class TicketFactory extends Factory
     public function archived()
     {
         return $this->state(fn () => [
-            'archived_at' => now()
+            'archived_at' => now(),
         ]);
     }
 
     public function notArchived()
     {
         return $this->state(fn () => [
-            'archived_at' => null
+            'archived_at' => null,
         ]);
     }
-
 }

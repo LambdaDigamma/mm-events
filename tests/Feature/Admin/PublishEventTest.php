@@ -3,6 +3,7 @@
 use Illuminate\Support\Carbon;
 use LambdaDigamma\MMEvents\Models\Event;
 use Orchestra\Testbench\Factories\UserFactory;
+
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\postJson;
 

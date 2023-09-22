@@ -7,11 +7,11 @@ test('it can be created', function () {
 
     $ticket = Ticket::create([
         'name' => 'Festivalticket',
-        'description' => null
+        'description' => null,
     ]);
 
     expect($ticket->id)->not->toBeNull();
-    expect($ticket->name)->toBe("Festivalticket");
+    expect($ticket->name)->toBe('Festivalticket');
 
 });
 
@@ -19,7 +19,7 @@ it('has ticket options', function () {
 
     $ticket = Ticket::create([
         'name' => 'Festivalticket',
-        'description' => null
+        'description' => null,
     ]);
 
     $ticketOption = TicketOption::create([

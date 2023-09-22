@@ -18,13 +18,13 @@ use Spatie\Translatable\HasTranslations;
 
 class Event extends Model
 {
-    use SoftDeletes;
     use Archivable;
-    use Publishable;
     use HasFactory;
     use HasTranslations;
+    use Publishable;
+    use SoftDeletes;
 
-    protected $table = "mm_events";
+    protected $table = 'mm_events';
 
     protected $fillable = [
         'name', 'start_date', 'end_date',
@@ -40,12 +40,16 @@ class Event extends Model
         'cancelled_at' => 'datetime',
         'extras' => AsCollection::class,
     ];
+
     protected $appends = ['attendance_mode', 'duration'];
+
     public $translatable = ['name', 'description', 'category'];
 
-    public const ATTENDANCE_MIXED = "mixed";
-    public const ATTENDANCE_OFFLINE = "offline";
-    public const ATTENDANCE_ONLINE = "online";
+    public const ATTENDANCE_MIXED = 'mixed';
+
+    public const ATTENDANCE_OFFLINE = 'offline';
+
+    public const ATTENDANCE_ONLINE = 'online';
 
     public function toArray(): array
     {
@@ -88,12 +92,12 @@ class Event extends Model
 
     public function jsonLd()
     {
-        $attendanceModeSchema = "https://schema.org/OfflineEventAttendanceMode";
+        $attendanceModeSchema = 'https://schema.org/OfflineEventAttendanceMode';
 
         if ($this->attendance_mode == self::ATTENDANCE_ONLINE) {
-            $attendanceModeSchema = "https://schema.org/OnlineEventAttendanceMode";
+            $attendanceModeSchema = 'https://schema.org/OnlineEventAttendanceMode';
         } elseif ($this->attendance_mode == self::ATTENDANCE_MIXED) {
-            $attendanceModeSchema = "https://schema.org/MixedEventAttendanceMode";
+            $attendanceModeSchema = 'https://schema.org/MixedEventAttendanceMode';
         }
 
         return [
@@ -103,7 +107,7 @@ class Event extends Model
             'endDate' => $this->end_date ? $this->end_date->tz('UTC')->toAtomString() : null,
             'eventStatus' => $this->cancelled_at == null ? 'https://schema.org/EventScheduled' : 'https://schema.org/EventCancelled',
             'eventAttendanceMode' => $attendanceModeSchema,
-            'description' => $this->description
+            'description' => $this->description,
         ];
     }
 
@@ -129,7 +133,7 @@ class Event extends Model
     {
         if ($this->start_date && $this->end_date) {
             return $this->end_date->diffInMinutes($this->start_date);
-        } else if ($this->start_date) {
+        } elseif ($this->start_date) {
             return config('mm-events.event_default_duration', 30);
         } else {
             return null;

@@ -250,7 +250,7 @@ class EventTest extends TestCase
             ->upcomingToday()
             ->published()
             ->create([
-                'extras' => []
+                'extras' => [],
             ]);
         $event->attendance_mode = 'mixed';
         $this->assertEquals('mixed', $event->attendance_mode);
@@ -295,14 +295,14 @@ class EventTest extends TestCase
             ->create([
                 'extras' => [
                     'collection' => 'collection-1',
-                ]
+                ],
             ]);
 
         $eventsWithoutCollection = Event::factory()
             ->times(4)
             ->published()
             ->create([
-                'extras' => []
+                'extras' => [],
             ]);
 
         $this->assertEquals(7, Event::query()->count());
@@ -320,7 +320,7 @@ class EventTest extends TestCase
             ->create([
                 'extras' => [
                     'collection' => 'collection-1',
-                ]
+                ],
             ]);
 
         $eventsWithCollection2 = Event::factory()
@@ -329,14 +329,14 @@ class EventTest extends TestCase
             ->create([
                 'extras' => [
                     'collection' => 'collection-2',
-                ]
+                ],
             ]);
 
         $eventsWithoutCollection = Event::factory()
             ->times(4)
             ->published()
             ->create([
-                'extras' => []
+                'extras' => [],
             ]);
 
         $countCollection2 = Event::query()

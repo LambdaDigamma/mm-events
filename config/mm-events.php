@@ -9,7 +9,7 @@ return [
     'event_default_duration' => 30,
 
     /*
-     * The event active duration determines how long 
+     * The event active duration determines how long
      * events should be treated active when no end date
      * is provided.
      * This value is measured in minutes.
@@ -27,26 +27,23 @@ return [
     'admin_prefix' => 'admin',
 
     /**
-     * This middleware stack is being 
+     * This middleware stack is being
      * used for all admin routes.
      */
     'admin_middleware' => ['web', 'auth'],
 
-    /**
-     * 
-     */
     'admin_as' => 'admin.',
 
     /**
-     * The api endpoints are being registered 
+     * The api endpoints are being registered
      * under this prefix.
      */
     'api_prefix' => 'api',
 
     /**
-     * This middleware stack is being 
+     * This middleware stack is being
      * used for all api routes.
      */
     'api_middleware' => ['api'],
-    
+
 ];

@@ -42,7 +42,7 @@ class UpdateEventTest extends TestCase
         $admin = UserFactory::new()->create();
         $event = Event::factory()->create([
             'name' => 'Some name',
-            'extras' => ['collection' => 'Festival']
+            'extras' => ['collection' => 'Festival'],
         ]);
 
         $this->assertEquals('Some name', $event->name);

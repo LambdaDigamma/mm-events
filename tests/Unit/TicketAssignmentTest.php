@@ -22,10 +22,10 @@ it('can be created', function () {
 test('event can have assigned tickets', function () {
 
     $ticket = Ticket::factory()->create([
-        'published_at' => now()
+        'published_at' => now(),
     ]);
     $event = Event::factory()->published()->create([
-        'published_at' => now()
+        'published_at' => now(),
     ]);
 
     $event = Event::find($event->id);

@@ -24,7 +24,7 @@ class UpdatePlaceEvent extends FormRequest
     public function rules()
     {
         return [
-            'place_id' => 'nullable|exists:' . config('mm-events.places_table', 'mm_places') . ',id',
+            'place_id' => 'nullable|exists:'.config('mm-events.places_table', 'mm_places').',id',
         ];
     }
 }
