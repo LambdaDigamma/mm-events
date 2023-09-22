@@ -33,10 +33,15 @@ class Event extends Model
         'extras', 'published_at', 'scheduled_at',
     ];
 
-    protected $casts = ['extras' => AsCollection::class,];
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+        'scheduled_at' => 'datetime',
+        'cancelled_at' => 'datetime',
+        'extras' => AsCollection::class,
+    ];
     protected $appends = ['attendance_mode', 'duration'];
     public $translatable = ['name', 'description', 'category'];
-    public $dates = ['start_date', 'end_date', 'scheduled_at', 'cancelled_at'];
 
     public const ATTENDANCE_MIXED = "mixed";
     public const ATTENDANCE_OFFLINE = "offline";

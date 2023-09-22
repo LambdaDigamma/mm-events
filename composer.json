@@ -31,9 +31,8 @@
         "fakerphp/faker": "^1.10",
         "nunomaduro/phpinsights": "^2.6",
         "orchestra/testbench": "^8.0",
-        "pestphp/pest": "^1.0",
-        "pestphp/pest-plugin-laravel": "^1.0",
-        "phpunit/phpunit": "^10.0",
+        "pestphp/pest": "^2.0",
+        "pestphp/pest-plugin-laravel": "^2.0",
         "spatie/laravel-ray": "^1.17",
         "vimeo/psalm": "^5.6"
     },

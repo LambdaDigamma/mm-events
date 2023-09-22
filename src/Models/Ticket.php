@@ -47,4 +47,15 @@ class Ticket extends Model
             'mm_ticket_assignments',
         )->using(TicketAssignment::class);
     }
+
+    public function toArray(): array
+    {
+        $attributes = parent::toArray();
+
+        foreach ($this->getTranslatableAttributes() as $name) {
+            $attributes[$name] = $this->getTranslation($name, app()->getLocale());
+        }
+
+        return $attributes;
+    }
 }

@@ -5,21 +5,20 @@ namespace LambdaDigamma\MMEvents\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Schema\Blueprint;
-use LambdaDigamma\MMEvents\Database\Factories\TicketFactory;
 use LambdaDigamma\MMEvents\Database\Factories\TicketOptionFactory;
-use LaravelArchivable\Archivable;
-use LaravelPublishable\Publishable;
 use Spatie\Translatable\HasTranslations;
 
 
 class TicketOption extends Model
 {
     use HasFactory;
+    use HasTranslations;
 
     protected $table = "mm_ticket_options";
+
+    protected $translatable = [
+        'name',
+    ];
 
     protected $fillable = [
         'name',
@@ -37,6 +36,17 @@ class TicketOption extends Model
     public function ticket(): BelongsTo
     {
         return $this->belongsTo(Ticket::class);
+    }
+
+    public function toArray(): array
+    {
+        $attributes = parent::toArray();
+
+        foreach ($this->getTranslatableAttributes() as $name) {
+            $attributes[$name] = $this->getTranslation($name, app()->getLocale());
+        }
+
+        return $attributes;
     }
 
 }
