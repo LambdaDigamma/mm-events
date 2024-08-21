@@ -379,7 +379,8 @@ class EventTest extends TestCase
         $this->assertEquals(55, $event->duration);
     }
 
-    public function testDateCasts() {
+    public function testDateCasts()
+    {
 
         $event = Event::factory()->create([
             'start_date' => Carbon::now()->addMinutes(45),
