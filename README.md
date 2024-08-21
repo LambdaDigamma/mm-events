@@ -3,7 +3,7 @@
 # Handle events for Mein Moers
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/lambdadigamma/mm-events.svg?style=flat-square)](https://packagist.org/packages/lambdadigamma/mm-events)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/lambdadigamma/mm-events/run-tests?label=tests)](https://github.com/lambdadigamma/mm-events/actions?query=workflow%3Arun-tests+branch%3Amaster)
+[![Tests](https://github.com/LambdaDigamma/mm-events/actions/workflows/run-tests.yml/badge.svg)](https://github.com/LambdaDigamma/mm-events/actions/workflows/run-tests.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/lambdadigamma/mm-events.svg?style=flat-square)](https://packagist.org/packages/lambdadigamma/mm-events)
 
 A package providing events for the Mein Moers platform.
